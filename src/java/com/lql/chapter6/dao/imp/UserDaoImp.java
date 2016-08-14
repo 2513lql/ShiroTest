@@ -104,13 +104,13 @@ public class UserDaoImp implements UserDao {
     public Set<String> findRoles(String username) {
         String sql = "select role from sys_users u , sys_roles r , sys_users_roles ur where u.username=? and ur.user_id=u.id and r.id=ur.role_id";
 
-        return new HashSet<String>(jdbcTemplate.query(sql, new BeanPropertyRowMapper(String.class), username));
+        return new HashSet(jdbcTemplate.queryForList(sql, String.class, username));
     }
 
     public Set<String> findPermissions(String username) {
         String sql = "select permission from sys_users u , sys_roles r ,sys_users_roles ur , sys_permissions p, sys_roles_permissions rp where u.username=? and ur.user_id=u.id and r.id=ur.role_id and rp.role_id=r.id and p.id=rp.permission_id";
 
-        return new HashSet<String>(jdbcTemplate.query(sql, new BeanPropertyRowMapper(String.class), username));
+        return new HashSet(jdbcTemplate.queryForList(sql, String.class, username));
     }
 
 }
